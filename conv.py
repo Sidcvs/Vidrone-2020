@@ -29,6 +29,7 @@ for img in allImgs:
 allAnnotations = glob.glob("VisDrone2019-DET-val/annotations/*.txt")
 annotations = []
 idx = 1
+ctr = 1
 for annotation in allAnnotations:
     fp = open(annotation, 'r')
     file_name = annotation.split('/')
@@ -51,9 +52,12 @@ for annotation in allAnnotations:
         newDict['occlusion'] = int(dat[7])
 
         ## Add conditions for truncation and occlusion here 
+        if newDict['occlusion'] == '2':
+            continue
 
         # find center of image
         center = [int(dat[0]) + float(dat[2])/2 , int (dat[1]) + float(dat[3])/2] # center (in original dimensions)
+        
         tot_height = 0 # total height of image
         tot_width = 0 #total width of image
 
@@ -65,7 +69,7 @@ for annotation in allAnnotations:
                 break
         # get center coordinated (normalized with width and height)
         center_normalized = [center[0]/tot_width, center[0]/tot_height] 
-        width_ht = [int(dat[2])/tot_width,int(dat[3])/tot_height]
+        width_ht = [float(dat[2])/tot_width,float(dat[3])/tot_height]
         newDict['center'] = center_normalized
         newDict['width_ht'] = width_ht
         idx += 1
