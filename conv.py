@@ -52,7 +52,7 @@ for annotation in allAnnotations:
         newDict['occlusion'] = int(dat[7])
 
         ## Add conditions for truncation and occlusion here 
-        if newDict['occlusion'] == '2':
+        if newDict['occlusion'] == 2:
             continue
 
         # find center of image
